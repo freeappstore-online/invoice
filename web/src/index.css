@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* Fonts loaded via <link> in index.html (Manrope + Fraunces from Google Fonts) */
+
+:root {
+  /* Neutrals */
+  --paper: #ffffff;
+  --ink: #1a1a1a;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --line-strong: #d1d5db;
+  --panel: #f9fafb;
+  --glass: rgba(255, 255, 255, 0.8);
+  --dock: #ffffff;
+
+  /* Status */
+  --success: #16a34a;
+  --warning: #d97706;
+  --error: #dc2626;
+
+  /* Accent */
+  --accent: #2563eb;
+
+  /* Fonts */
+  font-family: "Manrope", system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0f0f0f;
+    --ink: #f5f5f5;
+    --muted: #9ca3af;
+    --line: #2d2d2d;
+    --line-strong: #404040;
+    --panel: #1a1a1a;
+    --glass: rgba(15, 15, 15, 0.8);
+    --dock: #1a1a1a;
+
+    --success: #22c55e;
+    --warning: #fbbf24;
+    --error: #ef4444;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Prevent overscroll bounce on iOS */
+html {
+  overscroll-behavior: none;
+}
+
+/* Inputs (consistent across the app shell, NOT inside the invoice preview) */
+.app input,
+.app textarea,
+.app select {
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+  width: 100%;
+}
+.app input:focus,
+.app textarea:focus,
+.app select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.app textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+.app label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Invoice preview surface is always WHITE for printing/PDF clarity */
+.invoice-paper {
+  background: #ffffff;
+  color: #111111;
+  font-family: "Manrope", system-ui, sans-serif;
+}
+.invoice-paper.template-classic {
+  font-family: "Manrope", system-ui, sans-serif;
+}
+.invoice-paper.template-modern {
+  font-family: "Manrope", system-ui, sans-serif;
+}
+.invoice-paper.template-minimal {
+  font-family: "Fraunces", "Manrope", serif;
+}
+
+/* Print: hide everything except the invoice paper */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+  body * {
+    visibility: hidden !important;
+  }
+  .invoice-paper,
+  .invoice-paper * {
+    visibility: visible !important;
+  }
+  .invoice-paper {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
